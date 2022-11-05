@@ -12,6 +12,8 @@ public class Validation {
     private final static String userHomePageOptionRegex = "^[0-5]$";
     private final static String adminHomePageOptionRegex = "^[0-5]$";
     private final static String manageProductsPageOptionRegex = "^[0-6]$";
+    private final static String numberRegex = "^[0-9]*$";
+    private final static String categoryChoiceRegex = "^[0-3]*$";
 
     public static boolean validateUsername (String username) {
         Pattern pattern = Pattern.compile(usernameRegex);
@@ -59,5 +61,17 @@ public class Validation {
             input = scanner.next().trim().toUpperCase();
         } while (!input.matches("[YN]"));
         return input.equalsIgnoreCase("Y");
+    }
+
+    public static boolean checkNumberOnly(String input) {
+        Pattern pattern = Pattern.compile(numberRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+    public static boolean checkCategoryChoice (String input) {
+        Pattern pattern = Pattern.compile(categoryChoiceRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
     }
 }

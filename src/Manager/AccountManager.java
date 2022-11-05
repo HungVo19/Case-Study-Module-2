@@ -86,7 +86,7 @@ public class AccountManager implements Serializable, CRUD<Account> {
             System.out.println("⏩ Enter Username:");
             username = scanner.nextLine();
             if (username.contains("admin")) {
-                System.out.println("⛔ Username cannot be admin");
+                System.out.println("⛔ Username cannot be admin!");
             }
             else if (Validation.validateUsername(username) == false) {
                 System.out.println("⛔ Username is not applicable!");

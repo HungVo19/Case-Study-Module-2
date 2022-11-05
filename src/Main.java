@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    private static ArrayList<Category> categories = new ArrayList<>();
-    private static ArrayList<Role> roles = new ArrayList<>();
-    private static Scanner scanner = new Scanner(System.in);
-    private static SystemManager systemManager = new SystemManager();
+    private static final ArrayList<Category> categories = new ArrayList<>();
+    private static final ArrayList<Role> roles = new ArrayList<>();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final SystemManager systemManager = new SystemManager();
 
     static {
         categories.add(new Category("iPhone"));
@@ -65,6 +65,7 @@ public class Main {
                     }
                     break;
                 case 4:
+                    MenuPrinter.showSignUpPage();
                     systemManager.getAccountManager().signUp(roles.get(1));
                     activeUserActivities();
                     break;
@@ -135,7 +136,7 @@ public class Main {
         } while (true);
     }
 
-    public static void activeManageProductsActivities(){
+    public static void activeManageProductsActivities() {
         do {
             MenuPrinter.manageProductsPage();
             String input = "";
@@ -151,6 +152,7 @@ public class Main {
                     systemManager.getProductManager().display();
                     break;
                 case 2:
+                    systemManager.getProductManager().add(categories);
                     break;
                 case 3:
                     break;

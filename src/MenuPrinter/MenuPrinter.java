@@ -220,4 +220,29 @@ public class MenuPrinter {
         System.out.println("⛔ Wrong input. Try again");
     }
 
+    public static void showCategories() {
+        AsciiTable atHeader1 = new AsciiTable();
+        atHeader1.addRule();
+        AT_Row row1 = atHeader1.addRow("CATEGORY OPTION");
+        row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+        atHeader1.addRule();
+        System.out.println(atHeader1.render(40));
+
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow("1", "iPhone");
+        at.addRule();
+        at.addRow("2", "Macbook");
+        at.addRule();
+        at.addRow("3", "Apple watch");
+        at.addRule();
+        at.addRow("0", "Sign out");
+        at.addRule();
+        at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
+        String rend = at.render();
+        System.out.println(rend);
+        System.out.print("☛ Enter your choice: ");
+    }
+
+
 }
