@@ -8,14 +8,17 @@ public class Validation {
     private final static String usernameRegex = "^(?=[a-zA-Z].{6})[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)?$";
     private final static String emailRegex = ".";
     private final static String telRegex = ".";
-    private final static String guestHomePageOptionRegex = "^[0-4]$";
-    private final static String userHomePageOptionRegex = "^[0-5]$";
-    private final static String adminHomePageOptionRegex = "^[0-5]$";
+    private final static String guestHomePageOptionRegex = "^[0-5]$";
+    private final static String userHomePageOptionRegex = "^[0-6]$";
+    private final static String adminHomePageOptionRegex = "^[0-6]$";
     private final static String manageProductsPageOptionRegex = "^[0-6]$";
+    private final static String managePromotionPageOptionRegex = "^[0-4]$";
     private final static String integerRegex = "^[0-9]+$";
-    private final static String categoryChoiceRegex = "^[0-3]*$";
+    private final static String categoryChoiceRegex = "^[0-4]*$";
     private final static String updateProductPageChoiceRegex = "^[0-3]*$";
     private final static String searchPageChoiceRegex = "^[0-2]*$";
+    private final static String underConstructionRegex = "^[0]*$";
+    private final static String dateRegex = "([0-2][0-9]|(3)[0-1])[-|\\/](((0)[0-9])|((1)[0-2]))[-|\\/]\\d{4}";
 
     public static boolean validateUsername (String username) {
         Pattern pattern = Pattern.compile(usernameRegex);
@@ -124,5 +127,22 @@ public class Validation {
         Pattern pattern = Pattern.compile(searchPageChoiceRegex);
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
+    }public static boolean underConstruction(String input) {
+        Pattern pattern = Pattern.compile(underConstructionRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
     }
+
+    public static boolean checkManagePromotionsPageOption (String input) {
+        Pattern pattern = Pattern.compile(managePromotionPageOptionRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+    public static boolean checkDateInput (String input) {
+        Pattern pattern = Pattern.compile(dateRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
 }

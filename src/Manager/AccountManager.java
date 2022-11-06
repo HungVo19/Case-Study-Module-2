@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AccountManager implements Serializable, CRUD<Account> {
-
     private IOFile<Account> file;
     private ArrayList<Account> accounts;
     private final String filePath = "src/Data/AccountsList.txt";
@@ -21,6 +20,14 @@ public class AccountManager implements Serializable, CRUD<Account> {
         file = new IOFile<Account>();
         accounts = (ArrayList<Account>) file.readFromFile(filePath);
         resetStaticIndex();
+    }
+
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(ArrayList<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
@@ -59,10 +66,7 @@ public class AccountManager implements Serializable, CRUD<Account> {
     }
 
     public boolean signInUser(String username, String password) {
-        if (checkUserSignIn(username, password)) {
-            return true;
-        }
-        return false;
+        return checkUserSignIn(username, password);
     }
 
     public boolean signInAdmin(String username, String password) {
@@ -88,15 +92,15 @@ public class AccountManager implements Serializable, CRUD<Account> {
             if (username.contains("admin")) {
                 System.out.println("⛔ Username cannot be admin!");
             }
-            else if (Validation.validateUsername(username) == false) {
+            else if (!Validation.validateUsername(username)) {
                 System.out.println("⛔ Username is not applicable!");
                 System.out.println("⛔ Try again!");
             }
-            else if (checkUsernameAvailability(username) == false) {
+            else if (!checkUsernameAvailability(username)) {
                 System.out.println("⛔ This username is already existed!");
                 System.out.println("⛔ Try another one!");
             }
-        } while (Validation.validateUsername(username) == false || (checkUsernameAvailability(username) == false));
+        } while (!Validation.validateUsername(username) || (!checkUsernameAvailability(username)));
 
         String password = "";
         do {

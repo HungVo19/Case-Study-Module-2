@@ -4,6 +4,7 @@ import Model.Account;
 import Model.Category;
 import Model.Role;
 import Validation.Validation;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,14 +46,16 @@ public class Main {
                     guestSearching();
                     break;
                 case 3:
+                    showPromotion();
+                    break;
+                case 4:
                     System.out.println("⏩ Enter username:");
                     String username = scanner.nextLine();
                     System.out.println("⏩ Enter password:");
                     String password = scanner.nextLine();
                     if (systemManager.getAccountManager().signInUser(username, password) && !systemManager.getAccountManager().signInAdmin(username, password)) {
                         MenuPrinter.welcomeSignIn();
-                        MenuPrinter.welcomeBanner(username);
-                        activeUserActivities();
+                        activeUserActivities(username);
                     } else if (systemManager.getAccountManager().signInAdmin(username, password)) {
                         MenuPrinter.welcomeSignIn();
                         activeAdminActivities();
@@ -61,10 +64,12 @@ public class Main {
                         break;
                     }
                     break;
-                case 4:
+                case 5:
                     MenuPrinter.showSignUpPage();
                     systemManager.getAccountManager().signUp(roles.get(1));
-                    activeUserActivities();
+                    int index = systemManager.getAccountManager().getAccounts().size() - 1;
+                    String username1 = systemManager.getAccountManager().getAccounts().get(index).getUsername();
+                    activeUserActivities(username1);
                     break;
                 case 0:
                     System.exit(0);
@@ -73,8 +78,9 @@ public class Main {
         } while (true);
     }
 
-    public static void activeUserActivities() {
+    public static void activeUserActivities(String username) {
         do {
+            MenuPrinter.welcomeBanner(username);
             MenuPrinter.showUserHomePage();
             String input = "";
             do {
@@ -82,19 +88,23 @@ public class Main {
                 if (!Validation.checkUserHomePageOption(input)) {
                     MenuPrinter.wrongInput();
                 }
-            } while (!Validation.checkGuestHomePageOption(input));
+            } while (!Validation.checkUserHomePageOption(input));
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-
+                    systemManager.getProductManager().displayForUser();
                     break;
                 case 2:
+                    guestSearching();
                     break;
                 case 3:
                     break;
                 case 4:
+                    showPromotion();
                     break;
                 case 5:
+                case 6:
+                    showUnderConstructionPage();
                     break;
                 case 0:
                     MenuPrinter.signOutBanner();
@@ -116,15 +126,17 @@ public class Main {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    activeManageProductsActivities();
+                    activeProductsManagerActivities();
                     break;
                 case 2:
                     break;
                 case 3:
+                    activePromotionsManagerActivities();
                     break;
                 case 4:
-                    break;
                 case 5:
+                case 6:
+                    showUnderConstructionPage();
                     break;
                 case 0:
                     MenuPrinter.signOutBanner();
@@ -133,7 +145,7 @@ public class Main {
         } while (true);
     }
 
-    public static void activeManageProductsActivities() {
+    public static void activeProductsManagerActivities() {
         do {
             MenuPrinter.manageProductsPage();
             String input = "";
@@ -170,7 +182,7 @@ public class Main {
         } while (true);
     }
 
-    public static void guestSearching(){
+    public static void guestSearching() {
         do {
             MenuPrinter.searchPage();
             String input = "";
@@ -190,6 +202,72 @@ public class Main {
                     break;
                 case 0:
                     return;
+            }
+        } while (true);
+    }
+
+    public static void activePromotionsManagerActivities() {
+        do {
+            MenuPrinter.managePromotionPage();
+            String input = "";
+            do {
+                input = scanner.nextLine();
+                if (!Validation.checkManagePromotionsPageOption(input)) {
+                    MenuPrinter.wrongInput();
+                }
+            } while (!Validation.checkManagePromotionsPageOption(input));
+            int choice = Integer.parseInt(input);
+            switch (choice) {
+                case 1:
+                    systemManager.getPromotionManager().displayForAdmin();
+                    break;
+                case 2:
+                    systemManager.getPromotionManager().add(scanner);
+                    break;
+                case 3:
+                    systemManager.getPromotionManager().update();
+                    break;
+                case 4:
+                    systemManager.getPromotionManager().delete();
+                    break;
+                case 0:
+                    return;
+            }
+        } while (true);
+    };
+
+
+    public static void showUnderConstructionPage() {
+        do {
+            MenuPrinter.underConstruction();
+            String input = "";
+            do {
+                input = scanner.nextLine();
+                if (!Validation.underConstruction(input)) {
+                    MenuPrinter.wrongInput();
+                }
+            } while (!Validation.underConstruction(input));
+            int choice = Integer.parseInt(input);
+            if (choice == 0) {
+                return;
+            }
+        } while (true);
+    }
+
+    public static void showPromotion() {
+        do {
+            systemManager.getPromotionManager().displayForUser();
+            System.out.print("☛ Press 0 to return ");
+            String input = "";
+            do {
+                input = scanner.nextLine();
+                if (!Validation.underConstruction(input)) {
+                    MenuPrinter.wrongInput();
+                }
+            } while (!Validation.underConstruction(input));
+            int choice = Integer.parseInt(input);
+            if (choice == 0) {
+                return;
             }
         } while (true);
     }

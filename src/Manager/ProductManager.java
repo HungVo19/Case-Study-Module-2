@@ -39,7 +39,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
                 System.out.println("⛔ name cannot be empty!");
             }
         } while (name.isEmpty());
-        if (checkNameAvailability(name) == false) {
+        if (!checkNameAvailability(name)) {
             int newQuantity = products.get(getIndexByName(name)).getQuantity() + 1;
             products.get(getIndexByName(name)).setQuantity(newQuantity);
             System.out.println("✅ Product " + name + " is already existed. It's quantity is increased by 1! ");
@@ -92,6 +92,11 @@ public class ProductManager implements Serializable, CRUD<Product> {
                 case 3:
                     products.add(new Product(name, price, quantity, categories.get(2)));
                     break;
+                case 4:
+                    System.out.println("⏩ Enter name of new category: ");
+                    String newCategory = scanner.nextLine();
+                    Category category = new Category(newCategory);
+                    products.add(new Product(name, price, quantity, category));
                 case 0:
                     products.add(new Product(name, price, quantity, null));
                     break;
@@ -149,7 +154,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
 
     @Override
     public void update() {
-        System.out.println("⛔ Under construction!");
+        return;
     }
 
     public void update(ArrayList<Category> categories) {
@@ -167,25 +172,17 @@ public class ProductManager implements Serializable, CRUD<Product> {
             }
         } while (!Validation.checkInteger(input) || Integer.parseInt(input) < 0 || Integer.parseInt(input) >= products.size());
         int index = Integer.parseInt(input);
-//        String input1 = "";
-//        do {
-//            System.out.print("☛ Enter your choice: ");
-//            products.get(index).display();
-//            input1 = scanner.nextLine();
-//            if (!Validation.updateProductPageChoice(input1)) {
-//                MenuPrinter.wrongInput();
-//            }
-//        } while (!Validation.updateProductPageChoice(input1));
+
         String name = "";
         System.out.println("✅ Update product name:");
         name = scanner.nextLine();
         int temp = products.get(index).getQuantity();
         if (name.isEmpty()) {
             name = products.get(index).getName();
-        } else if (checkNameAvailability(name) == false) {
+        } else if (!checkNameAvailability(name)) {
             int newQuantity = products.get(getIndexByName(name)).getQuantity() + temp;
             products.get(getIndexByName(name)).setQuantity(newQuantity);
-            System.out.println("✅ Product " + name + " is already existed. It's quantity is increased correspondingly! ");
+            System.out.println("✅ Product " + name + " is already existed. It's quantity is increased by " + temp + " correspondingly! ");
             products.remove(index);
             file.writeToFile(products, filePath);
             return;
@@ -245,6 +242,11 @@ public class ProductManager implements Serializable, CRUD<Product> {
             case 3:
                 products.get(index).setCategory(categories.get(2));
                 break;
+            case 4:
+                System.out.println("⏩ Enter name of new category: ");
+                String newCategory = scanner.nextLine();
+                Category category = new Category(newCategory);
+                products.get(index).setCategory(category);
             case 0:
                 break;
         }
@@ -313,8 +315,8 @@ public class ProductManager implements Serializable, CRUD<Product> {
             System.out.println("⏩ Enter key word:");
             String input = scanner.nextLine();
             ArrayList<Product> tempList = new ArrayList<>();
-            for (Product p: products) {
-                if ((p.getName()).toLowerCase().contains(input.toLowerCase())){
+            for (Product p : products) {
+                if ((p.getName()).toLowerCase().contains(input.toLowerCase())) {
                     tempList.add(p);
                 }
             }
@@ -325,7 +327,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
     public double getTotalMoney() {
         this.products = (ArrayList<Product>) file.readFromFile(filePath);
         double totalMoney = 0;
-        for (Product p: products) {
+        for (Product p : products) {
             totalMoney += p.getAmount();
         }
         return totalMoney;
@@ -333,8 +335,8 @@ public class ProductManager implements Serializable, CRUD<Product> {
 
     public Integer getTotalQuantity() {
         this.products = (ArrayList<Product>) file.readFromFile(filePath);
-        Integer totalQuantity= 0;
-        for (Product p: products) {
+        Integer totalQuantity = 0;
+        for (Product p : products) {
             totalQuantity += p.getQuantity();
         }
         return totalQuantity;
@@ -350,15 +352,15 @@ public class ProductManager implements Serializable, CRUD<Product> {
             };
             System.out.println(FlipTable.of(headers, data));
         } else {
-            Object[][] data = new Object[products.size()+1][5];
+            Object[][] data = new Object[products.size() + 1][5];
             for (int i = 0; i < products.size(); i++) {
                 if (products.get(i).getCategory() == null) {
                     data[i] = new Object[]{String.valueOf(products.get(i).getId()), i, "NA", products.get(i).getName(), String.valueOf(products.get(i).getPrice()), String.valueOf(products.get(i).getQuantity()), String.valueOf(products.get(i).getAmount())};
                 } else {
-                    data[i] = new Object[]{String.valueOf(products.get(i).getId()), i, String.valueOf(products.get(i).getCategory().getName()), products.get(i).getName(), String.valueOf(products.get(i).getPrice()), String.valueOf(products.get(i).getQuantity()),String.valueOf(products.get(i).getAmount())};
+                    data[i] = new Object[]{String.valueOf(products.get(i).getId()), i, String.valueOf(products.get(i).getCategory().getName()), products.get(i).getName(), String.valueOf(products.get(i).getPrice()), String.valueOf(products.get(i).getQuantity()), String.valueOf(products.get(i).getAmount())};
                 }
             }
-            data[products.size()] = new Object[]{"","","","","",String.valueOf(getTotalQuantity()),String.valueOf(getTotalMoney())};
+            data[products.size()] = new Object[]{"", "", "", "", "", String.valueOf(getTotalQuantity()), String.valueOf(getTotalMoney())};
             System.out.println(FlipTableConverters.fromObjects(headers, data));
         }
     }
