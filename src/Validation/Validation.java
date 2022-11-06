@@ -12,8 +12,10 @@ public class Validation {
     private final static String userHomePageOptionRegex = "^[0-5]$";
     private final static String adminHomePageOptionRegex = "^[0-5]$";
     private final static String manageProductsPageOptionRegex = "^[0-6]$";
-    private final static String numberRegex = "^[0-9]*$";
+    private final static String integerRegex = "^[0-9]+$";
     private final static String categoryChoiceRegex = "^[0-3]*$";
+    private final static String updateProductPageChoiceRegex = "^[0-3]*$";
+    private final static String searchPageChoiceRegex = "^[0-2]*$";
 
     public static boolean validateUsername (String username) {
         Pattern pattern = Pattern.compile(usernameRegex);
@@ -63,14 +65,63 @@ public class Validation {
         return input.equalsIgnoreCase("Y");
     }
 
-    public static boolean checkNumberOnly(String input) {
-        Pattern pattern = Pattern.compile(numberRegex);
+    public static boolean checkInteger(String input) {
+        Pattern pattern = Pattern.compile(integerRegex);
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }
 
     public static boolean checkCategoryChoice (String input) {
         Pattern pattern = Pattern.compile(categoryChoiceRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+    public static Double parseDouble(String myString) {
+        final String Digits = "(\\p{Digit}+)";
+        final String HexDigits = "(\\p{XDigit}+)";
+
+        final String Exp = "[eE][+-]?" + Digits;
+        final String fpRegex = ("[\\x00-\\x20]*" +
+                "[+-]?(" +
+                "NaN|" +
+                "Infinity|" +
+
+                "(((" + Digits + "(\\.)?(" + Digits + "?)(" + Exp + ")?)|" +
+                "(\\.(" + Digits + ")(" + Exp + ")?)|" +
+                "((" +
+                "(0[xX]" + HexDigits + "(\\.)?)|" +
+
+                "(0[xX]" + HexDigits + "?(\\.)" + HexDigits + ")" +
+                ")[pP][+-]?" + Digits + "))" + "[fFdD]?))" + "[\\x00-\\x20]*");
+
+        if (Pattern.matches(fpRegex, myString))
+            return Double.valueOf(myString);
+        else {
+            return null;
+        }
+    }
+
+    public static boolean updateProductPageChoice (String input) {
+        Pattern pattern = Pattern.compile(updateProductPageChoiceRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+//    public static  boolean checkRangeFrom0ToSize (String choice, int size) {
+//        String regex =
+//        Pattern pattern = Pattern.compile("^[1-5]$");
+//        Matcher matcher = pattern.matcher(choice);
+//        return matcher.matches();
+//    }
+
+    public static boolean searchKeyWord (String word,String keyword) {
+        Pattern pattern = Pattern.compile(".*\\b(" + keyword + ")\\b.*");
+        Matcher matcher = pattern.matcher(word);
+        return matcher.matches();
+    }
+
+    public static boolean checkSearchPageOption(String input) {
+        Pattern pattern = Pattern.compile(searchPageChoiceRegex);
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }

@@ -4,12 +4,7 @@ import Model.Account;
 import Model.Category;
 import Model.Role;
 import Validation.Validation;
-import de.vandermeer.asciitable.AT_Row;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -31,6 +26,7 @@ public class Main {
 
     public static void main(String[] args) {
         SystemManager systemManager = new SystemManager();
+
         do {
             MenuPrinter.showGuestHomePage();
             String input = "";
@@ -43,9 +39,10 @@ public class Main {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getProductManager().display();
+                    systemManager.getProductManager().displayForUser();
                     break;
                 case 2:
+                    guestSearching();
                     break;
                 case 3:
                     System.out.println("⏩ Enter username:");
@@ -155,15 +152,43 @@ public class Main {
                     systemManager.getProductManager().add(categories);
                     break;
                 case 3:
+                    systemManager.getProductManager().update(categories);
                     break;
                 case 4:
+                    systemManager.getProductManager().delete();
                     break;
                 case 5:
+                    systemManager.getProductManager().searchByPriceRange(scanner);
                     break;
                 case 6:
+                    systemManager.getProductManager().searchByKeyWord(scanner);
                     break;
                 case 0:
                     MenuPrinter.signOutBanner();
+                    return;
+            }
+        } while (true);
+    }
+
+    public static void guestSearching(){
+        do {
+            MenuPrinter.searchPage();
+            String input = "";
+            do {
+                input = scanner.nextLine();
+                if (!Validation.checkSearchPageOption(input)) {
+                    MenuPrinter.wrongInput();
+                }
+            } while (!Validation.checkSearchPageOption(input));
+            int choice = Integer.parseInt(input);
+            switch (choice) {
+                case 1:
+                    systemManager.getProductManager().searchByPriceRange(scanner);
+                    break;
+                case 2:
+                    systemManager.getProductManager().searchByKeyWord(scanner);
+                    break;
+                case 0:
                     return;
             }
         } while (true);

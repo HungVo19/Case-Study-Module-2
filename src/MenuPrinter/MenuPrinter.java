@@ -45,7 +45,7 @@ public class MenuPrinter {
         System.out.print("☛ Enter your choice: ");
     }
 
-    public static void showSearchPage(){
+    public static void showSearchPage() {
 
     }
 
@@ -160,7 +160,7 @@ public class MenuPrinter {
         System.out.println("⛔ Wrong username or password");
     }
 
-    public static void manageProductsPage () {
+    public static void manageProductsPage() {
         AsciiTable atHeader = new AsciiTable();
         atHeader.addRule();
         AT_Row row = atHeader.addRow("ADMIN HOME PAGE");
@@ -186,9 +186,9 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("2", "Add new product");
         at.addRule();
-        at.addRow("3", "Update product by Id");
+        at.addRow("3", "Update product by Index");
         at.addRule();
-        at.addRow("4", "Delete product by Id");
+        at.addRow("4", "Delete product by Index");
         at.addRule();
         at.addRow("5", "Search product by price range");
         at.addRule();
@@ -202,7 +202,7 @@ public class MenuPrinter {
         System.out.print("☛ Enter your choice: ");
     }
 
-    public static void welcomeBanner (String username) {
+    public static void welcomeBanner(String username) {
         AsciiTable atHeader = new AsciiTable();
         atHeader.addRule();
         AT_Row row1 = atHeader.addRow("WELCOME " + username);
@@ -211,13 +211,23 @@ public class MenuPrinter {
         System.out.println(atHeader.render(40));
     }
 
-    public static void signOutBanner () {
+    public static void signOutBanner() {
         System.out.println("✅ Sign out successfully");
         System.out.println("⌛ Loading System");
     }
 
-    public static void wrongInput () {
+    public static void wrongInput() {
         System.out.println("⛔ Wrong input. Try again");
+    }
+
+    public static void deleteProduct() {
+        System.out.println("✅ Delete successfully");
+    }
+
+    public static void updateSuccessfully() {
+        System.out.println("✅ Update successfully");
+        System.out.println("⌛ Loading System");
+
     }
 
     public static void showCategories() {
@@ -236,7 +246,7 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("3", "Apple watch");
         at.addRule();
-        at.addRow("0", "Sign out");
+        at.addRow("0", "Later");
         at.addRule();
         at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
         String rend = at.render();
@@ -244,5 +254,61 @@ public class MenuPrinter {
         System.out.print("☛ Enter your choice: ");
     }
 
+    public static void outOfBound() {
+        System.out.println("⛔ Index out of bound. Try again");
+    }
 
+//    public static void updateProductPage() {
+//        AsciiTable atHeader1 = new AsciiTable();
+//        atHeader1.addRule();
+//        AT_Row row1 = atHeader1.addRow("UPDATE PRODUCT");
+//        row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+//        atHeader1.addRule();
+//        System.out.println(atHeader1.render(40));
+//
+//        AsciiTable at = new AsciiTable();
+//        at.addRule();
+//        at.addRow("1", "Name");
+//        at.addRule();
+//        at.addRow("2", "Price");
+//        at.addRule();
+//        at.addRow("3", "Quantity");
+//        at.addRule();
+//        at.addRow("4", "Category");
+//        at.addRule();
+//        at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
+//        String rend = at.render();
+//        System.out.println(rend);
+//        System.out.print("☛ Enter your choice: ");
+//    }
+
+    public static void addSuccessfully() {
+        System.out.println("✅ Product added successfully!");
+        System.out.println("⌛ Loading System");
+    }
+
+    public static void searchPage() {
+        AsciiTable atHeader1 = new AsciiTable();
+        atHeader1.addRule();
+        AT_Row row1 = atHeader1.addRow("SEARCH SAND FOUND");
+        row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+        atHeader1.addRule();
+        System.out.println(atHeader1.render(40));
+
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow("1", "Search by Price range");
+        at.addRule();
+        at.addRow("2", "Search by keywword");
+        at.addRule();
+        at.addRow("0", "Back");
+        at.addRule();
+        at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
+        String rend = at.render();
+        System.out.println(rend);
+        System.out.print("☛ Enter your choice: ");
+    }
 }
+
+
+

@@ -60,6 +60,10 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public Double getAmount() {
+        return price * quantity;
+    }
+
     public void display () {
         String[] headers = {"ID", "Category", "Name", "Price", "Quantity"};
         String[][] data;
