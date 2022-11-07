@@ -23,6 +23,18 @@ public class ProductManager implements Serializable, CRUD<Product> {
         resetStaticIndex();
     }
 
+    public IOFile<Product> getFile() {
+        return file;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
     @Override
     public void add(Product product) {
         products.add(product);
@@ -385,6 +397,17 @@ public class ProductManager implements Serializable, CRUD<Product> {
             System.out.println(FlipTableConverters.fromObjects(headers, data));
         }
     }
+
+    public void displayForPurchase() {
+        this.products = (ArrayList<Product>) file.readFromFile(filePath);
+        String[] headers = {"Index", "Name", "Price", "Quantity"};
+        Object[][] data = new Object[products.size()][5];
+        for (int i = 0; i < products.size(); i++) {
+            data[i] = new Object[]{i, products.get(i).getName(), String.valueOf(products.get(i).getPrice()), String.valueOf(products.get(i).getQuantity())};
+        }
+        System.out.println(FlipTableConverters.fromObjects(headers, data));
+    }
+
 
     public void display(ArrayList<Product> products) {
         String[] headers = {"Category", "Name", "Price", "Quantity"};

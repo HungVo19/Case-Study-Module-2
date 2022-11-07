@@ -10,9 +10,9 @@ public class Validation {
     private final static String telRegex = ".";
     private final static String guestHomePageOptionRegex = "^[0-5]$";
     private final static String userHomePageOptionRegex = "^[0-6]$";
-    private final static String adminHomePageOptionRegex = "^[0-6]$";
+    private final static String adminHomePageOptionRegex = "^[0-5]$";
     private final static String manageProductsPageOptionRegex = "^[0-6]$";
-    private final static String managePromotionPageOptionRegex = "^[0-4]$";
+    private final static String manageNotificationPageOptionRegex = "^[0-4]$";
     private final static String manageAccountsPageOptionRegex = "^[0-4]$";
     private final static String manageProfilePageOptionRegex = "^[0-3]$";
     private final static String integerRegex = "^[0-9]+$";
@@ -135,8 +135,8 @@ public class Validation {
         return matcher.matches();
     }
 
-    public static boolean checkManagePromotionsPageOption (String input) {
-        Pattern pattern = Pattern.compile(managePromotionPageOptionRegex);
+    public static boolean checkManageNotificationsPageOption (String input) {
+        Pattern pattern = Pattern.compile(manageNotificationPageOptionRegex);
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }

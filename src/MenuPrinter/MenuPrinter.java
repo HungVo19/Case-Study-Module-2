@@ -40,7 +40,7 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("2", "Search Apple.com");
         at.addRule();
-        at.addRow("3", "Promotion");
+        at.addRow("3", "Notification");
         at.addRule();
         at.addRow("4", "Log in to your account");
         at.addRule();
@@ -103,7 +103,7 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("3", "Manage Your Apple Store account");
         at.addRule();
-        at.addRow("4", "Promotion");
+        at.addRow("4", "Notification");
         at.addRule();
         at.addRow("5", "Your Cart");
         at.addRule();
@@ -144,13 +144,11 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("2", "Manage users");
         at.addRule();
-        at.addRow("3", "Manage promotion");
+        at.addRow("3", "Manage Notification");
         at.addRule();
         at.addRow("4", "View total income");
         at.addRule();
         at.addRow("5", "View bills");
-        at.addRule();
-        at.addRow("6", "Chat with customers");
         at.addRule();
         at.addRow("0", "Sign out");
         at.addRule();
@@ -292,8 +290,8 @@ public class MenuPrinter {
         System.out.println("⌛ Loading System");
     }
 
-    public static void addPromotionSuccessfully() {
-        System.out.println("✅ Promotion added successfully!");
+    public static void addNotificationSuccessfully() {
+        System.out.println("✅ Notification added successfully!");
         System.out.println("⌛ Loading System");
     }
 
@@ -331,7 +329,7 @@ public class MenuPrinter {
         System.out.print("☛ Press 0 to return ");
     }
 
-    public static void managePromotionPage() {
+    public static void manageNotificationPage() {
         AsciiTable atHeader = new AsciiTable();
         atHeader.addRule();
         AT_Row row = atHeader.addRow("ADMIN HOME PAGE");
@@ -346,20 +344,20 @@ public class MenuPrinter {
         System.out.println(atHeader.render(40));
         AsciiTable atHeader1 = new AsciiTable();
         atHeader1.addRule();
-        AT_Row row1 = atHeader1.addRow("PROMOTION MANAGER");
+        AT_Row row1 = atHeader1.addRow("NOTIFICATION MANAGER");
         row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
         atHeader1.addRule();
         System.out.println(atHeader1.render(40));
 
         AsciiTable at = new AsciiTable();
         at.addRule();
-        at.addRow("1", "Display all promotion");
+        at.addRow("1", "Display all notification");
         at.addRule();
-        at.addRow("2", "Add new promotion");
+        at.addRow("2", "Add new notification");
         at.addRule();
-        at.addRow("3", "Update promotion");
+        at.addRow("3", "Update notification");
         at.addRule();
-        at.addRow("4", "Delete promotion");
+        at.addRow("4", "Delete notification");
         at.addRule();
         at.addRow("0", "Back");
         at.addRule();
@@ -369,14 +367,13 @@ public class MenuPrinter {
         System.out.print("☛ Enter your choice: ");
     }
 
-    public static void noPromotion () {
+    public static void noNotification () {
         AsciiTable atHeader = new AsciiTable();
         atHeader.addRule();
         AT_Row row = atHeader.addRow("New Promotion coming soon.Stay tune!");
         row.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
         atHeader.addRule();
         System.out.println(atHeader.render(40));
-        System.out.print("☛ Press 0 to return ");
     }
 
     public static void manageAccountsPage() {
@@ -432,6 +429,22 @@ public class MenuPrinter {
         String rend = at.render();
         System.out.println(rend);
         System.out.print("☛ Enter your choice: ");
+    }
+
+    public static void cartPage() {
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow("1", "Add item");
+        at.addRule();
+        at.addRow("2", "Remove item");
+        at.addRule();
+        at.addRow("3", "Checkout");
+        at.addRule();
+        at.addRow("0", "Back");
+        at.addRule();
+        at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
+        String rend = at.render();
+        System.out.println(rend);
     }
 }
 

@@ -1,5 +1,6 @@
 import Manager.SystemManager;
 import MenuPrinter.MenuPrinter;
+import Model.Cart;
 import Model.Category;
 import Model.Role;
 import Validation.Validation;
@@ -41,7 +42,7 @@ public class ApplicationRunner {
                     guestSearching();
                     break;
                 case 3:
-                    showPromotion();
+                    showNotification();
                     break;
                 case 4:
                     System.out.println("⏩ Enter username:");
@@ -122,9 +123,11 @@ public class ApplicationRunner {
                     activeUserProfileActivities(username);
                     break;
                 case 4:
-                    showPromotion();
+                    showNotification();
                     break;
                 case 5:
+                    activeCartActivities(username);
+                    break;
                 case 6:
                     showUnderConstructionPage();
                     break;
@@ -169,6 +172,39 @@ public class ApplicationRunner {
         } while (true);
     }
 
+    public static void activeCartActivities(String username) {
+        int index = systemManager.getAccountManager().getIndex(username);
+        Cart cart = new Cart(systemManager.getAccountManager().getAccounts().get(index), systemManager);
+        do {
+            cart.display();
+            MenuPrinter.cartPage();
+            System.out.print("☛ Enter your choice: ");
+            int choice = Integer.parseInt(scanner.nextLine());
+            switch (choice) {
+                case 1:
+                    systemManager.getProductManager().displayForPurchase();
+                    System.out.println("Enter item and quantity to add to cart: ");
+                    int index1 = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter item and quantity to add to cart: ");
+                    int quantity = Integer.parseInt(scanner.nextLine());
+                    cart.addItem(index1, quantity);
+                    break;
+                case 2:
+                    System.out.println("Enter item and quantity to remove:");
+                    int index2 = Integer.parseInt(scanner.nextLine());
+                    System.out.println("Enter item and quantity to remove:");
+                    int quantity1 = Integer.parseInt(scanner.nextLine());
+                    cart.removeItem(index2,quantity1);
+                    break;
+                case 3:
+                    cart.checkOut();
+                    break;
+                case 0:
+                    return;
+            }
+        }while (true);
+    }
+
     public static void activeAdminActivities() {
         do {
             MenuPrinter.showAdminHomePage();
@@ -188,11 +224,10 @@ public class ApplicationRunner {
                     activeAccountsManagerActivities();
                     break;
                 case 3:
-                    activePromotionsManagerActivities();
+                    activeNotificationsManagerActivities();
                     break;
                 case 4:
                 case 5:
-                case 6:
                     showUnderConstructionPage();
                     break;
                 case 0:
@@ -323,21 +358,21 @@ public class ApplicationRunner {
         } while (true);
     }
 
-    public static void activePromotionsManagerActivities() {
+    public static void activeNotificationsManagerActivities() {
         do {
-            MenuPrinter.managePromotionPage();
+            MenuPrinter.manageNotificationPage();
             String input = "";
             do {
                 input = scanner.nextLine();
-                if (!Validation.checkManagePromotionsPageOption(input)) {
+                if (!Validation.checkManageNotificationsPageOption(input)) {
                     MenuPrinter.wrongInput();
                 }
-            } while (!Validation.checkManagePromotionsPageOption(input));
+            } while (!Validation.checkManageNotificationsPageOption(input));
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
                     do {
-                        systemManager.getPromotionManager().displayForAdmin();
+                        systemManager.getNotificationManager().displayForAdmin();
                         System.out.print("☛ Press 0 to return ");
                         String input1 = "";
                         do {
@@ -353,13 +388,13 @@ public class ApplicationRunner {
                     } while (true);
 //                    break;
                 case 2:
-                    systemManager.getPromotionManager().add(scanner);
+                    systemManager.getNotificationManager().add(scanner);
                     break;
                 case 3:
-                    systemManager.getPromotionManager().update();
+                    systemManager.getNotificationManager().update();
                     break;
                 case 4:
-                    systemManager.getPromotionManager().delete();
+                    systemManager.getNotificationManager().delete();
                     break;
                 case 0:
                     return;
@@ -387,9 +422,9 @@ public class ApplicationRunner {
         } while (true);
     }
 
-    public static void showPromotion() {
+    public static void showNotification() {
         do {
-            systemManager.getPromotionManager().displayForUser();
+            systemManager.getNotificationManager().displayForUser();
             System.out.print("☛ Press 0 to return ");
             String input = "";
             do {

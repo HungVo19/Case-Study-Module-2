@@ -68,8 +68,9 @@ public class AccountManager implements Serializable, CRUD<Account> {
     }
 
     public void delete(int index) {
-            MenuPrinter.deleteProduct();
-            accounts.remove(index);
+        MenuPrinter.deleteProduct();
+        accounts.remove(index);
+        System.out.println("⌛ Loading system ....");
         file.writeToFile(accounts, filePath);
     }
 
@@ -141,10 +142,14 @@ public class AccountManager implements Serializable, CRUD<Account> {
         do {
             System.out.println("⏩ Enter new password");
             newPass = scanner.nextLine();
-            if (newPass.equals(accounts.get(index).getPassword())){
+            if (accounts.get(index).getPassword().equals(newPass)) {
                 System.out.println("⛔ New password cannot be the same as your old password");
+            } else {
+                accounts.get(index).setPassword(newPass);
+                break;
             }
         } while (newPass.equals(accounts.get(index).getPassword()));
+        System.out.println("✅ Change password successfully");
         file.writeToFile(accounts, filePath);
     }
 

@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class SystemManager implements Serializable {
     private final AccountManager accountManager;
     private final ProductManager productManager;
-    private final PromotionManager promotionManager;
+    private final NotificationManager notificationManager;
 
 
     public SystemManager() {
         accountManager = new AccountManager();
         productManager = new ProductManager();
-        promotionManager = new PromotionManager();
+        notificationManager = new NotificationManager();
     }
 
     public AccountManager getAccountManager() {
@@ -20,8 +20,8 @@ public class SystemManager implements Serializable {
     public ProductManager getProductManager() {
         return productManager;
     }
-    public PromotionManager getPromotionManager() {
-        return promotionManager;
+    public NotificationManager getNotificationManager() {
+        return notificationManager;
     }
 
 

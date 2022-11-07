@@ -3,7 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Promotion implements Serializable {
+public class Notification implements Serializable {
     public static Long INDEX = Long.valueOf(0);
     private Long id;
     private String title;
@@ -11,7 +11,7 @@ public class Promotion implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Promotion(String title, String content, LocalDate startDate, LocalDate endDate) {
+    public Notification(String title, String content, LocalDate startDate, LocalDate endDate) {
         this.id = Long.valueOf(++INDEX);
         this.title = title;
         this.content = content;
