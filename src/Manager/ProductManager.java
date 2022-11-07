@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class ProductManager implements Serializable, CRUD<Product> {
-    private IOFile<Product> file;
+    private final IOFile<Product> file;
     private ArrayList<Product> products;
     private final String filePath = "src/Data/ProductsList.txt";
 
@@ -411,5 +411,4 @@ public class ProductManager implements Serializable, CRUD<Product> {
             Product.INDEX = products.get(products.size() - 1).getId();
         }
     }
-
 }

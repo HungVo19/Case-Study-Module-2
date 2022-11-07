@@ -27,6 +27,13 @@ public class MenuPrinter {
         atHeader1.addRule();
         System.out.println(atHeader1.render(40));
 
+        AsciiTable atHeader2 = new AsciiTable();
+        atHeader2.addRule();
+        AT_Row row2 = atHeader2.addRow("*Warning! For Demo usage only!*");
+        row2.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+        atHeader2.addRule();
+        System.out.println(atHeader2.render(40));
+
         AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow("1", "Browse products");
@@ -166,6 +173,10 @@ public class MenuPrinter {
         System.out.println("⛔ Wrong username or password");
     }
 
+    public static void usernameNotFound() {
+        System.out.println("⛔ username not found!");
+    }
+
     public static void manageProductsPage() {
         AsciiTable atHeader = new AsciiTable();
         atHeader.addRule();
@@ -192,9 +203,9 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("2", "Add new product");
         at.addRule();
-        at.addRow("3", "Update product by Index");
+        at.addRow("3", "Update product");
         at.addRule();
-        at.addRow("4", "Delete product by Index");
+        at.addRow("4", "Delete product");
         at.addRule();
         at.addRow("5", "Search product by price range");
         at.addRule();
@@ -211,7 +222,16 @@ public class MenuPrinter {
     public static void welcomeBanner(String username) {
         AsciiTable atHeader = new AsciiTable();
         atHeader.addRule();
-        AT_Row row1 = atHeader.addRow("WELCOME " + username);
+        AT_Row row1 = atHeader.addRow(" WELCOME " + username);
+        row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+        atHeader.addRule();
+        System.out.println(atHeader.render(40));
+    }
+
+    public static void userBanner(String username) {
+        AsciiTable atHeader = new AsciiTable();
+        atHeader.addRule();
+        AT_Row row1 = atHeader.addRow(username);
         row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
         atHeader.addRule();
         System.out.println(atHeader.render(40));
@@ -229,6 +249,7 @@ public class MenuPrinter {
     public static void deleteProduct() {
         System.out.println("✅ Delete successfully");
     }
+
 
     public static void updateSuccessfully() {
         System.out.println("✅ Update successfully");
@@ -336,9 +357,9 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("2", "Add new promotion");
         at.addRule();
-        at.addRow("3", "Update promotion by Index");
+        at.addRow("3", "Update promotion");
         at.addRule();
-        at.addRow("4", "Delete promotion by Index");
+        at.addRow("4", "Delete promotion");
         at.addRule();
         at.addRow("0", "Back");
         at.addRule();
@@ -356,6 +377,59 @@ public class MenuPrinter {
         atHeader.addRule();
         System.out.println(atHeader.render(40));
         System.out.print("☛ Press 0 to return ");
+    }
+
+    public static void manageAccountsPage() {
+        AsciiTable atHeader = new AsciiTable();
+        atHeader.addRule();
+        AT_Row row = atHeader.addRow("ADMIN HOME PAGE");
+        row.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+        atHeader.addRule();
+        row.setPaddingTopChar('v');
+        row.setPaddingBottomChar('^');
+        row.setPaddingLeftChar('>');
+        row.setPaddingRightChar('<');
+        row.setTextAlignment(TextAlignment.CENTER);
+        row.setPadding(1);
+        System.out.println(atHeader.render(40));
+        AsciiTable atHeader1 = new AsciiTable();
+        atHeader1.addRule();
+        AT_Row row1 = atHeader1.addRow("ACCOUNTS MANAGER");
+        row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
+        atHeader1.addRule();
+        System.out.println(atHeader1.render(40));
+
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow("1", "Display all accounts");
+        at.addRule();
+        at.addRow("2", "Add new account");
+        at.addRule();
+        at.addRow("3", "Update account");
+        at.addRule();
+        at.addRow("4", "Delete account");
+        at.addRule();
+        at.addRow("0", "Back");
+        at.addRule();
+        at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
+        String rend = at.render();
+        System.out.println(rend);
+        System.out.print("☛ Enter your choice: ");
+    }
+
+    public static void manageProfilePage() {
+        AsciiTable at = new AsciiTable();
+        at.addRule();
+        at.addRow("1", "Update information");
+        at.addRule();
+        at.addRow("2", "Change password");
+        at.addRule();
+        at.addRow("0", "Back");
+        at.addRule();
+        at.getRenderer().setCWC(new CWC_LongestWordMin(new int[]{-1, 36}));
+        String rend = at.render();
+        System.out.println(rend);
+        System.out.print("☛ Enter your choice: ");
     }
 }
 

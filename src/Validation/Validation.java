@@ -13,11 +13,13 @@ public class Validation {
     private final static String adminHomePageOptionRegex = "^[0-6]$";
     private final static String manageProductsPageOptionRegex = "^[0-6]$";
     private final static String managePromotionPageOptionRegex = "^[0-4]$";
+    private final static String manageAccountsPageOptionRegex = "^[0-4]$";
+    private final static String manageProfilePageOptionRegex = "^[0-2]$";
     private final static String integerRegex = "^[0-9]+$";
-    private final static String categoryChoiceRegex = "^[0-4]*$";
-    private final static String updateProductPageChoiceRegex = "^[0-3]*$";
-    private final static String searchPageChoiceRegex = "^[0-2]*$";
-    private final static String underConstructionRegex = "^[0]*$";
+    private final static String categoryChoiceRegex = "^[0-4]$";
+    private final static String updateProductPageChoiceRegex = "^[0-3]$";
+    private final static String searchPageChoiceRegex = "^[0-2]$";
+    private final static String underConstructionRegex = "^[0]$";
     private final static String dateRegex = "([0-2][0-9]|(3)[0-1])[-|\\/](((0)[0-9])|((1)[0-2]))[-|\\/]\\d{4}";
 
     public static boolean validateUsername (String username) {
@@ -144,5 +146,19 @@ public class Validation {
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }
+
+    public static boolean checkManageAccountsPageOption (String input) {
+        Pattern pattern = Pattern.compile(manageProfilePageOptionRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+    public static boolean checkManageProfilePageOption (String input) {
+        Pattern pattern = Pattern.compile(manageAccountsPageOptionRegex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+
 
 }

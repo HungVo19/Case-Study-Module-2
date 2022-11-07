@@ -101,7 +101,7 @@ public class PromotionManager implements Serializable, CRUD<Promotion> {
         displayForAdmin();
         String input = "";
         do {
-            System.out.println("⏩ Enter id of product to update: ");
+            System.out.println("⏩ Enter index of product to update: ");
             input = scanner.nextLine();
             if (!Validation.checkInteger(input)) {
                 MenuPrinter.wrongInput();
@@ -153,22 +153,33 @@ public class PromotionManager implements Serializable, CRUD<Promotion> {
     }
 
     public void displayForUser() {
+        file.readFromFile(filePath);
         if (promotions.isEmpty()) {
             MenuPrinter.noPromotion();
-            return;
-        }
-        ArrayList<Promotion> newPromotions = new ArrayList<>();
-        for (Promotion p : promotions) {
-            if (p.getStatus().equals("Live")) {
-                newPromotions.add(p);
+        } else {
+            boolean flag = false;
+            for (Promotion p: promotions) {
+                if (p.getStatus().equals("Live"));
+                flag = true;
+                break;
             }
-        }
-        String[] headers = {"Title", "Content", "Start Date", "End Date",};
-        Object[][] data = new Object[promotions.size()][7];
-        for (int i = 0; i < promotions.size(); i++) {
-            data[i] = new Object[]{promotions.get(i).getTitle(), promotions.get(i).getContent(), promotions.get(i).getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    promotions.get(i).getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))};
-            System.out.println(FlipTableConverters.fromObjects(headers, data));
+            if (flag) {
+                MenuPrinter.noPromotion();
+            }else {
+                ArrayList<Promotion> newPromotions = new ArrayList<>();
+                for (Promotion p : promotions) {
+                    if (p.getStatus().equals("Live")) {
+                        newPromotions.add(p);
+                    }
+                }
+                String[] headers = {"Title", "Content", "Start Date", "End Date",};
+                Object[][] data = new Object[promotions.size()][7];
+                for (int i = 0; i < promotions.size(); i++) {
+                    data[i] = new Object[]{promotions.get(i).getTitle(), promotions.get(i).getContent(), promotions.get(i).getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            promotions.get(i).getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))};
+                    System.out.println(FlipTableConverters.fromObjects(headers, data));
+                }
+            }
         }
     }
 

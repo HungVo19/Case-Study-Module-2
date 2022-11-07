@@ -94,9 +94,9 @@ public class Account implements Serializable {
     }
 
     public void display() {
-        String[] headers = {"ID", "Username", "Password", "Name", "Email", "Tel", "Role"};
+        String[] headers = {"Username", "Password", "Name", "Email", "Tel"};
         String[][] data = new String[][]{
-                {String.valueOf(this.id), this.username, this.password, this.name, this.email, this.tel, this.role.getStatus()}
+                {this.username, this.password, this.name, this.email, this.tel}
         };
         System.out.println(FlipTable.of(headers, data));
     }
