@@ -1,6 +1,8 @@
 package Model;
 
 import com.jakewharton.fliptables.FlipTable;
+import com.jakewharton.fliptables.FlipTableConverters;
+import resources.AsciiArtTable;
 
 import java.io.Serializable;
 
@@ -94,10 +96,12 @@ public class Account implements Serializable {
     }
 
     public void display() {
-        String[] headers = {"Username", "Password", "Name", "Email", "Tel"};
-        String[][] data = new String[][]{
-                {this.username, this.password, this.name, this.email, this.tel}
+        String[] headers = { "Username", "Password", "Name", "Email", "Tel"};
+        Object[][] data = {
+                {this.username, this.password, this.name, this.email, this.tel},
         };
-        System.out.println(FlipTable.of(headers, data));
-    }
+        System.out.println(FlipTableConverters.fromObjects(headers, data));
+        }
+
+
 }

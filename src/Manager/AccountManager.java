@@ -49,7 +49,7 @@ public class AccountManager implements Serializable, CRUD<Account> {
         displayAll();
         String input = "";
         do {
-            System.out.println("⏩ Enter id of product to delete: ");
+            System.out.println("⏩ Enter id of account to delete: ");
             input = scanner.nextLine();
             if (!Validation.checkInteger(input)) {
                 MenuPrinter.wrongInput();
@@ -64,6 +64,12 @@ public class AccountManager implements Serializable, CRUD<Account> {
             MenuPrinter.deleteProduct();
             accounts.remove(index);
         }
+        file.writeToFile(accounts, filePath);
+    }
+
+    public void delete(int index) {
+            MenuPrinter.deleteProduct();
+            accounts.remove(index);
         file.writeToFile(accounts, filePath);
     }
 
@@ -108,8 +114,38 @@ public class AccountManager implements Serializable, CRUD<Account> {
         file.writeToFile(accounts, filePath);
     }
 
-    public void update (int index) {
+    public void update(int index, Scanner scanner) {
+        System.out.println("⏩ Update name: ");
+        String name = scanner.nextLine();
+        if (!name.equals("")) {
+            accounts.get(index).setName(name);
+        }
 
+        System.out.println("⏩ Update email: ");
+        String email = scanner.nextLine();
+        if (!email.equals("")) {
+            accounts.get(index).setEmail(email);
+        }
+        System.out.println("⏩ Update tel: ");
+        String tel = scanner.nextLine();
+        if (!tel.equals("")) {
+            accounts.get(index).setTel(tel);
+        }
+
+        System.out.println("✅ Update account successfully!");
+        file.writeToFile(accounts, filePath);
+    }
+
+    public void changePass(int index, Scanner scanner) {
+        String newPass = "";
+        do {
+            System.out.println("⏩ Enter new password");
+            newPass = scanner.nextLine();
+            if (newPass.equals(accounts.get(index).getPassword())){
+                System.out.println("⛔ New password cannot be the same as your old password");
+            }
+        } while (newPass.equals(accounts.get(index).getPassword()));
+        file.writeToFile(accounts, filePath);
     }
 
     @Override

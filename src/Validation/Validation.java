@@ -14,7 +14,7 @@ public class Validation {
     private final static String manageProductsPageOptionRegex = "^[0-6]$";
     private final static String managePromotionPageOptionRegex = "^[0-4]$";
     private final static String manageAccountsPageOptionRegex = "^[0-4]$";
-    private final static String manageProfilePageOptionRegex = "^[0-2]$";
+    private final static String manageProfilePageOptionRegex = "^[0-3]$";
     private final static String integerRegex = "^[0-9]+$";
     private final static String categoryChoiceRegex = "^[0-4]$";
     private final static String updateProductPageChoiceRegex = "^[0-3]$";
@@ -154,7 +154,7 @@ public class Validation {
     }
 
     public static boolean checkManageProfilePageOption (String input) {
-        Pattern pattern = Pattern.compile(manageAccountsPageOptionRegex);
+        Pattern pattern = Pattern.compile(manageProfilePageOptionRegex);
         Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }

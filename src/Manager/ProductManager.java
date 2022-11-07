@@ -134,7 +134,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
         display();
         String input = "";
         do {
-            System.out.println("⏩ Enter id of product to delete: ");
+            System.out.println("⏩ Enter index of product to delete: ");
             input = scanner.nextLine();
             if (!Validation.checkInteger(input)) {
                 MenuPrinter.wrongInput();
@@ -163,7 +163,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
         display();
         String input = "";
         do {
-            System.out.println("Enter id of product to update: ");
+            System.out.println("Enter index of product to update: ");
             input = scanner.nextLine();
             if (!Validation.checkInteger(input)) {
                 MenuPrinter.wrongInput();

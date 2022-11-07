@@ -142,7 +142,7 @@ public class MenuPrinter {
         at.addRule();
         at.addRow("1", "Manage products");
         at.addRule();
-        at.addRow("2", "Manage account");
+        at.addRow("2", "Manage users");
         at.addRule();
         at.addRow("3", "Manage promotion");
         at.addRule();
@@ -394,7 +394,7 @@ public class MenuPrinter {
         System.out.println(atHeader.render(40));
         AsciiTable atHeader1 = new AsciiTable();
         atHeader1.addRule();
-        AT_Row row1 = atHeader1.addRow("ACCOUNTS MANAGER");
+        AT_Row row1 = atHeader1.addRow("USERS MANAGER");
         row1.getCells().get(0).getContext().setTextAlignment(TextAlignment.CENTER);
         atHeader1.addRule();
         System.out.println(atHeader1.render(40));
@@ -423,6 +423,8 @@ public class MenuPrinter {
         at.addRow("1", "Update information");
         at.addRule();
         at.addRow("2", "Change password");
+        at.addRule();
+        at.addRow("3", "Delete account");
         at.addRule();
         at.addRow("0", "Back");
         at.addRule();

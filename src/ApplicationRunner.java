@@ -22,7 +22,7 @@ public class ApplicationRunner {
         roles.add(new Role("user"));
     }
 
-    public void run() {
+    public static void run() {
         do {
             MenuPrinter.showGuestHomePage();
             String input = "";
@@ -35,7 +35,7 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getProductManager().displayForUser();
+                    display();
                     break;
                 case 2:
                     guestSearching();
@@ -81,6 +81,24 @@ public class ApplicationRunner {
         } while (true);
     }
 
+    public static void display() {
+        do {
+            systemManager.getProductManager().displayForUser();
+            System.out.print("☛ Press 0 to return ");
+            String input = "";
+            do {
+                input = scanner.nextLine();
+                if (!Validation.underConstruction(input)) {
+                    MenuPrinter.wrongInput();
+                }
+            } while (!Validation.underConstruction(input));
+            int choice = Integer.parseInt(input);
+            if (choice == 0) {
+                return;
+            }
+        } while (true);
+    }
+
     public static void activeUserActivities(String username) {
         do {
             MenuPrinter.welcomeBanner(username);
@@ -95,7 +113,7 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getProductManager().displayForUser();
+                    display();
                     break;
                 case 2:
                     guestSearching();
@@ -132,9 +150,19 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
+                    systemManager.getAccountManager().update(index,scanner);
                     break;
                 case 2:
+                    systemManager.getAccountManager().changePass(index,scanner);
                     break;
+                case 3:
+                   if(!Validation.checkYN("⛔ Delete this account permanently (Y/N) ?")) {
+                       return;
+                   } else {
+                       systemManager.getAccountManager().delete(index);
+                       run();
+                   }
+
                 case 0:
                     return;
             }
@@ -187,8 +215,22 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getProductManager().display();
-                    break;
+                    do {
+                        systemManager.getProductManager().display();
+                        System.out.print("☛ Press 0 to return ");
+                        String input1 = "";
+                        do {
+                            input1 = scanner.nextLine();
+                            if (!Validation.underConstruction(input1)) {
+                                MenuPrinter.wrongInput();
+                            }
+                        } while (!Validation.underConstruction(input1));
+                        int choice1 = Integer.parseInt(input1);
+                        if (choice1 == 0) {
+                            return;
+                        }
+                    } while (true);
+//                    break;
                 case 2:
                     systemManager.getProductManager().add(categories);
                     break;
@@ -224,8 +266,22 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getAccountManager().displayAll();
-                    break;
+                    do {
+                        systemManager.getAccountManager().displayAll();
+                        System.out.print("☛ Press 0 to return ");
+                        String input1 = "";
+                        do {
+                            input1 = scanner.nextLine();
+                            if (!Validation.underConstruction(input1)) {
+                                MenuPrinter.wrongInput();
+                            }
+                        } while (!Validation.underConstruction(input1));
+                        int choice1 = Integer.parseInt(input1);
+                        if (choice1 == 0) {
+                            return;
+                        }
+                    } while (true);
+//                    break;
                 case 2:
                     systemManager.getAccountManager().signUp(roles);
                     break;
@@ -280,8 +336,22 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getPromotionManager().displayForAdmin();
-                    break;
+                    do {
+                        systemManager.getPromotionManager().displayForAdmin();
+                        System.out.print("☛ Press 0 to return ");
+                        String input1 = "";
+                        do {
+                            input1 = scanner.nextLine();
+                            if (!Validation.underConstruction(input1)) {
+                                MenuPrinter.wrongInput();
+                            }
+                        } while (!Validation.underConstruction(input1));
+                        int choice1 = Integer.parseInt(input1);
+                        if (choice1 == 0) {
+                            return;
+                        }
+                    } while (true);
+//                    break;
                 case 2:
                     systemManager.getPromotionManager().add(scanner);
                     break;
