@@ -1,7 +1,9 @@
+import Manager.CartManager;
 import Manager.SystemManager;
 import MenuPrinter.MenuPrinter;
 import Model.Cart;
 import Model.Category;
+import Model.Product;
 import Model.Role;
 import Validation.Validation;
 
@@ -177,29 +179,70 @@ public class ApplicationRunner {
     public static void activeCartActivities(Cart cart) {
         do {
             cart.display();
+            systemManager.getProductManager().displayForPurchase();
             MenuPrinter.cartPage();
             System.out.print("☛ Enter your choice: ");
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    systemManager.getProductManager().displayForPurchase();
+                    systemManager.getProductManager().getFile().readFromFile("src/Data/ProductsList.txt");
+//                    systemManager.getProductManager().displayForPurchase();
                     System.out.println("⏩ Enter item to add: ");
                     int itemAdd = Integer.parseInt(scanner.nextLine());
                     System.out.println("⏩ Enter quantity: ");
                     int addQ = Integer.parseInt(scanner.nextLine());
-                    cart.addItem(systemManager.getProductManager().getProducts().get(itemAdd), addQ);
+                    Product addItem = new Product(systemManager.getProductManager().getProducts().get(itemAdd).getName(),
+                            systemManager.getProductManager().getProducts().get(itemAdd).getPrice(),
+//                            systemManager.getProductManager().getProducts().get(itemAdd).getQuantity(),
+                            addQ,
+                            systemManager.getProductManager().getProducts().get(itemAdd).getCategory());
+//                    cart.addItem(systemManager.getProductManager().getProducts().get(itemAdd), addQ);
+                    cart.addITem(addItem);
+                    systemManager.getProductManager().getProducts().get(itemAdd).decreaseQuantity(addQ);
+                    systemManager.getProductManager().getFile().writeToFile(systemManager.getProductManager().getProducts(), "src/Data/ProductsList.txt");
                     break;
                 case 2:
                     cart.display();
-                    System.out.println("⏩Enter quantity: ");
-                    int itemRemove = Integer.parseInt(scanner.nextLine());
+                    System.out.println("⏩Enter item to remove: ");
+                    int index = Integer.parseInt(scanner.nextLine());
+                    String name = cart.getCart().get(index).getName();
                     System.out.println("⏩ Enter quantity: ");
                     int removeQ = Integer.parseInt(scanner.nextLine());
-                    cart.removeItem(systemManager.getProductManager().getProducts().get(itemRemove), removeQ);
+                    cart.removeItem(index, removeQ);
+                    int index1 = -1;
+                    for (int i = 0; i < systemManager.getProductManager().getProducts().size(); i++) {
+                        if (systemManager.getProductManager().getProducts().get(i).getName().equals(name)){
+                            index1 = i;
+                            break;
+                        }
+                    }
+                    systemManager.getProductManager().getProducts().get(index1).increaseQuantity(removeQ);
+                    systemManager.getProductManager().getFile().writeToFile(systemManager.getProductManager().getProducts(), "src/Data/ProductsList.txt");
                     break;
                 case 3:
-
-                    break;
+                    cart.display();
+                    if (!Validation.checkYN("Do you want to check Out (Y/N)?")) {
+                        break;
+                    } else {
+                        do {
+                            cart.checkOut();
+                            systemManager.getProductManager().getFile().writeToFile(systemManager.getProductManager().getProducts(), "src/Data/ProductsList.txt");
+                            cart.clearCart();
+                            System.out.println("Press 0 to exit!");
+                            String input = "";
+                            do {
+                                input = scanner.nextLine();
+                                if (!Validation.underConstruction(input)) {
+                                    MenuPrinter.wrongInput();
+                                }
+                            } while (!Validation.underConstruction(input));
+                            int choice1 = Integer.parseInt(input);
+                            if (choice1 == 0) {
+                                return;
+                            }
+                        } while (true);
+                    }
+//                    break;
                 case 0:
                     return;
             }

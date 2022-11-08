@@ -18,5 +18,11 @@ public class CartManager implements Serializable {
         carts = (ArrayList<Cart>) file.readFromFile(filePath);
     }
 
+    public ArrayList<Cart> getCarts() {
+        return carts;
+    }
 
+    public void setCarts(ArrayList<Cart> carts) {
+        this.carts = carts;
+    }
 }

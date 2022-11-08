@@ -434,11 +434,11 @@ public class MenuPrinter {
     public static void cartPage() {
         AsciiTable at = new AsciiTable();
         at.addRule();
-        at.addRow("1", "Add item");
+        at.addRow("1", "Add item to cart");
         at.addRule();
-        at.addRow("2", "Remove item");
+        at.addRow("2", "Remove item from cart");
         at.addRule();
-        at.addRow("3", "Checkout");
+        at.addRow("3", "Buy");
         at.addRule();
         at.addRow("0", "Back");
         at.addRule();

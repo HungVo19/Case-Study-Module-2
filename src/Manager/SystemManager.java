@@ -6,12 +6,14 @@ public class SystemManager implements Serializable {
     private final AccountManager accountManager;
     private final ProductManager productManager;
     private final NotificationManager notificationManager;
+    private final CartManager cartManager;
 
 
     public SystemManager() {
         accountManager = new AccountManager();
         productManager = new ProductManager();
         notificationManager = new NotificationManager();
+        cartManager = new CartManager();
     }
 
     public AccountManager getAccountManager() {
@@ -24,5 +26,7 @@ public class SystemManager implements Serializable {
         return notificationManager;
     }
 
-
+    public CartManager getCartManager() {
+        return cartManager;
+    }
 }

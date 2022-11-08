@@ -52,6 +52,16 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
+    public void decreaseQuantity(int quantity) {
+        int temp = getQuantity();
+        setQuantity(temp -quantity);
+    }
+
+    public void increaseQuantity(int quantity) {
+        int temp = getQuantity();
+        setQuantity(temp+quantity);
+    }
+
     public Category getCategory() {
         return category;
     }

@@ -8,7 +8,6 @@ import Model.Product;
 import Validation.Validation;
 import com.jakewharton.fliptables.FlipTable;
 import com.jakewharton.fliptables.FlipTableConverters;
-
 import java.io.Serializable;
 import java.util.*;
 
@@ -31,9 +30,9 @@ public class ProductManager implements Serializable, CRUD<Product> {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
+//    public void setProducts(ArrayList<Product> products) {
+//        this.products = products;
+//    }
 
     @Override
     public void add(Product product) {
@@ -109,6 +108,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
                     String newCategory = scanner.nextLine();
                     Category category = new Category(newCategory);
                     products.add(new Product(name, price, quantity, category));
+                    break;
                 case 0:
                     products.add(new Product(name, price, quantity, null));
                     break;
@@ -166,7 +166,6 @@ public class ProductManager implements Serializable, CRUD<Product> {
 
     @Override
     public void update() {
-        return;
     }
 
     public void update(ArrayList<Category> categories) {
@@ -360,7 +359,7 @@ public class ProductManager implements Serializable, CRUD<Product> {
         String[] headers = {"ID", "Index", "Category", "Name", "Price", "Quantity", "Inventory"};
         if (products.isEmpty()) {
             String[][] data = new String[][]{
-                    {"NA", "NA", "NA", "NA", "NA", "NA"}
+                    {"NA", "NA", "NA", "NA", "NA", "NA","NA"}
             };
             System.out.println(FlipTable.of(headers, data));
         } else {
@@ -410,17 +409,17 @@ public class ProductManager implements Serializable, CRUD<Product> {
 
 
     public void display(ArrayList<Product> products) {
-        String[] headers = {"Category", "Name", "Price", "Quantity"};
+        String[] headers = {"Category", "Name", "Price","Quantity"};
         if (products.isEmpty()) {
             String[][] data = new String[][]{
-                    {"NA", "NA", "NA", "NA"}
+                    {"NA", "NA", "NA","NA"}
             };
             System.out.println(FlipTable.of(headers, data));
         } else {
             Object[][] data = new Object[products.size()][5];
             for (int i = 0; i < products.size(); i++) {
                 if (products.get(i).getCategory() == null) {
-                    data[i] = new Object[]{"NA", products.get(i).getName(), String.valueOf(products.get(i).getPrice()), String.valueOf(products.get(i).getQuantity())};
+                    data[i] = new Object[]{"NA", products.get(i).getName(), String.valueOf(products.get(i).getPrice())};
                 } else {
                     data[i] = new Object[]{String.valueOf(products.get(i).getCategory().getName()), products.get(i).getName(), String.valueOf(products.get(i).getPrice()), String.valueOf(products.get(i).getQuantity())};
                 }
