@@ -7,18 +7,22 @@ import com.jakewharton.fliptables.FlipTable;
 import com.jakewharton.fliptables.FlipTableConverters;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cart implements Serializable {
     private Account cartId;
-    private ArrayList<Product> cart;
+    private Map<Product, Integer> cart;
     private double totalPrice;
-    private ProductManager productManager;
 
-    public Cart(Account account, SystemManager systemManager) {
+    public Cart(Account account) {
         this.cartId = account;
-        this.cart = new ArrayList<>();
-        this.productManager = systemManager.getProductManager();
+        this.cart = new HashMap<>();
+    }
+
+    public Cart(Account cartId, Map<Product, Integer> cart) {
+        this.cartId = cartId;
+        this.cart = new HashMap<>();
     }
 
     public Account getCartId() {
@@ -29,82 +33,59 @@ public class Cart implements Serializable {
         this.cartId = cartId;
     }
 
+    public void addItem(Product product, int quantity) {
+        Set<Product> productSet = cart.keySet();
+        boolean check = false;
+        for (Product p : productSet) {
+            if (p.getId().equals(product.getId())) {
+                int temp = cart.get(p);
+                cart.put(p, (quantity + temp));
+                check = true;
+            }
+        }
+        if (!check) {
+            cart.put(product, quantity);
+        }
+    }
+
+    public void removeItem(Product product, int quantity) {
+        Set<Product> productSet = cart.keySet();
+        boolean check = false;
+        for (Product p : productSet) {
+            if (p.getId().equals(product.getId())) {
+                int temp = cart.get(p);
+                cart.put(p, (temp - quantity));
+                check = true;
+            }
+        }
+        if (!check) {
+            System.out.println("Cart is empty!");;
+        }
+    }
+
+
+    public void clearCart() {
+        cart.clear();
+    }
+
     public ArrayList<Product> getCart() {
-        return cart;
-    }
-
-    public void setCart(ArrayList<Product> cart) {
-        this.cart = cart;
-    }
-
-    public void addItem(int index, int quantity) {
-        for (Product p : cart) {
-            if (p.equals(productManager.getProducts().get(index))) {
-                int temp = p.getQuantity();
-                p.setQuantity(temp + quantity);
-                updateInventory();
-                return;
-            }
-        }
-        Product tempP = productManager.getProducts().get(index);
-        cart.add(tempP);
-        tempP.setQuantity(quantity);
-        updateInventory();
-    }
-
-    public void removeItem(int index, int quantity) {
-        int temp = cart.get(index).getQuantity();
-        cart.get(index).setQuantity(temp - quantity);
-        updateInventory();
-    }
-
-    public void checkOut() {
-        display();
-        if (!Validation.checkYN("Confirm your purchase (Y/N)")) {
-            return;
-        } else {
-            System.out.println("Purchase successfully!");
-            updateInventory();
-        }
-    }
-
-
-    public void displayPurchaseHistory() {
-
-    }
-
-    public void updateInventory() {
-        for (int i = 0; i < productManager.getProducts().size(); i++) {
-            for (Product product : cart) {
-                if (productManager.getProducts().get(i).equals(product)) {
-                    int temp = productManager.getProducts().get(i).getQuantity();
-                    productManager.getProducts().get(i).setQuantity(temp - product.getQuantity());
-                }
-            }
-        }
-        productManager.getFile().writeToFile(productManager.getProducts(), "src/Data/ProductsList.txt");
-    }
-
-    public double getTotalPrice() {
-        double amount = 0;
-        for (Product p : cart) {
-            amount += p.getAmount();
-        }
-        return amount;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+        return (ArrayList<Product>) cart.keySet()
+                .stream()
+                .flatMap(item -> Collections.nCopies(cart.get(item), item).stream())
+                .collect(Collectors.toList());
     }
 
     public void display() {
-        String[] headers = {"Name", "Price", "Quantity", "Amount"};
-        Object[][] data = new Object[cart.size() + 1][4];
-        for (int i = 0; i < cart.size(); i++) {
-            data[i] = new Object[]{cart.get(i).getName(), String.valueOf(cart.get(i).getPrice()), String.valueOf(cart.get(i).getQuantity()), String.valueOf(cart.get(i).getAmount())};
+        Set<Product> productSet = cart.keySet();
+        for (Product p : productSet) {
+            p.display();
+            System.out.println("Số lượng:" + cart.get(p));
         }
-        data[cart.size()] = new Object[]{"", "", "Your Total", getTotalPrice()};
-        System.out.println(FlipTableConverters.fromObjects(headers, data));
+
     }
 }
+
+
+
+
 

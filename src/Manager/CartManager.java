@@ -9,17 +9,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class CartManager implements Serializable {
-    private IOFile<ArrayList<Cart>> file;
-    private ArrayList<Cart> bills;
-    public CartManager(Account account, SystemManager systemManager) {
-        file = new IOFile<ArrayList<Cart>>();
-        bills = new ArrayList<>();
+    private final IOFile<Cart> file;
+    private ArrayList<Cart> carts;
+    private final String filePath = "src/Data/CartsList.txt";
+
+    public CartManager() {
+        file = new IOFile<Cart>();
+        carts = (ArrayList<Cart>) file.readFromFile(filePath);
     }
 
-    public void display() {
-        for (Cart b: bills) {
-            b.display();
-        }
-    }
 
 }

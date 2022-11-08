@@ -105,6 +105,8 @@ public class ApplicationRunner {
             MenuPrinter.welcomeBanner(username);
             MenuPrinter.showUserHomePage();
             String input = "";
+            int index = systemManager.getAccountManager().getIndex(username);
+            Cart cart = new Cart(systemManager.getAccountManager().getAccounts().get(index));
             do {
                 input = scanner.nextLine();
                 if (!Validation.checkUserHomePageOption(input)) {
@@ -126,7 +128,7 @@ public class ApplicationRunner {
                     showNotification();
                     break;
                 case 5:
-                    activeCartActivities(username);
+                    activeCartActivities(cart);
                     break;
                 case 6:
                     showUnderConstructionPage();
@@ -153,18 +155,18 @@ public class ApplicationRunner {
             int choice = Integer.parseInt(input);
             switch (choice) {
                 case 1:
-                    systemManager.getAccountManager().update(index,scanner);
+                    systemManager.getAccountManager().update(index, scanner);
                     break;
                 case 2:
-                    systemManager.getAccountManager().changePass(index,scanner);
+                    systemManager.getAccountManager().changePass(index, scanner);
                     break;
                 case 3:
-                   if(!Validation.checkYN("⛔ Delete this account permanently (Y/N) ?")) {
-                       return;
-                   } else {
-                       systemManager.getAccountManager().delete(index);
-                       run();
-                   }
+                    if (!Validation.checkYN("⛔ Delete this account permanently (Y/N) ?")) {
+                        return;
+                    } else {
+                        systemManager.getAccountManager().delete(index);
+                        run();
+                    }
 
                 case 0:
                     return;
@@ -172,9 +174,7 @@ public class ApplicationRunner {
         } while (true);
     }
 
-    public static void activeCartActivities(String username) {
-        int index = systemManager.getAccountManager().getIndex(username);
-        Cart cart = new Cart(systemManager.getAccountManager().getAccounts().get(index), systemManager);
+    public static void activeCartActivities(Cart cart) {
         do {
             cart.display();
             MenuPrinter.cartPage();
@@ -183,26 +183,27 @@ public class ApplicationRunner {
             switch (choice) {
                 case 1:
                     systemManager.getProductManager().displayForPurchase();
-                    System.out.println("Enter item and quantity to add to cart: ");
-                    int index1 = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Enter item and quantity to add to cart: ");
-                    int quantity = Integer.parseInt(scanner.nextLine());
-                    cart.addItem(index1, quantity);
+                    System.out.println("⏩ Enter item to add: ");
+                    int itemAdd = Integer.parseInt(scanner.nextLine());
+                    System.out.println("⏩ Enter quantity: ");
+                    int addQ = Integer.parseInt(scanner.nextLine());
+                    cart.addItem(systemManager.getProductManager().getProducts().get(itemAdd), addQ);
                     break;
                 case 2:
-                    System.out.println("Enter item and quantity to remove:");
-                    int index2 = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Enter item and quantity to remove:");
-                    int quantity1 = Integer.parseInt(scanner.nextLine());
-                    cart.removeItem(index2,quantity1);
+                    cart.display();
+                    System.out.println("⏩Enter quantity: ");
+                    int itemRemove = Integer.parseInt(scanner.nextLine());
+                    System.out.println("⏩ Enter quantity: ");
+                    int removeQ = Integer.parseInt(scanner.nextLine());
+                    cart.removeItem(systemManager.getProductManager().getProducts().get(itemRemove), removeQ);
                     break;
                 case 3:
-                    cart.checkOut();
+
                     break;
                 case 0:
                     return;
             }
-        }while (true);
+        } while (true);
     }
 
     public static void activeAdminActivities() {
